@@ -126,31 +126,33 @@ $(document).ready(function() {
         });
 
         $(document).ready(function() {
-                $("#userForm").submit(function(event) {
-                    event.preventDefault();
-
-                    let username = $("#username").val();
-                    let age = $("#age").val();
-                    let accountNumber = $("#accountNumber").val();
-                    let accountBalance = $("#accountBalance").val();
-
-                    $.ajax({
-                        url: "http://127.0.0.1:8000/api/posts/", // 백엔드 API 주소
-                        type: "POST",
-                        data: {
-                            username: username,
-                            age: age,
-                            accountNumber: accountNumber,
-                            accountBalance: accountBalance
-                        },
-                        success: function(response) {
-                            // 서버 응답에 대한 처리
-                            console.log(response);
-                            window.location.href = 'index2.html'
-                        },
-                        error: function(error) {
-                            console.error("Error:", error);
-                        }
-                    });
+            $("#userForm").submit(function(event) {
+                // 폼의 기본 동작(페이지 리로딩)을 막음
+                event.preventDefault();
+    
+                let name = $("#name").val();
+                let age = $("#age").val();
+                let accountNumber = $("#accountNumber").val();
+                let accountBalance = $("#accountBalance").val();
+    
+                let formData = {
+                    name: name,
+                    age: age,
+                    accountNumber: accountNumber,
+                    accountBalance: accountBalance
+                };
+    
+                // 백엔드로 데이터 전송 (AJAX)
+                $.ajax({
+                    type: "POST",
+                    url: "HTTPS://127.0.0.1:8080/api/posts/?format=api", // 백엔드 API URL로 변경
+                    data: formData,
+                    success: function(response) {
+                        console.log("전송 완료:", response);
+                    },
+                    error: function(error) {
+                        console.error("전송 실패:", error);
+                    }
                 });
             });
+        });
